@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stephani | Interactive Web Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nightBordeaux: '#5B0015',
+                        coolHorizon: '#80AEE9',
+                        ivoryMist: '#F7F2E0',
+                        bordeauxDark: '#3D000E',
+                        bordeauxLight: '#7A001E',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        playful: ['Fredoka', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #5B0015; color: #F7F2E0; }
+        .font-playful { font-family: 'Fredoka', cursive, sans-serif; }
+
+        .bg-bordeaux-glow { background: radial-gradient(circle at 50% 15%, #7A001E 0%, #5B0015 65%, #3D000E 100%); }
+
+        .custom-card {
+            background: rgba(247, 242, 224, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 2px solid rgba(247, 242, 224, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .horizon-card {
+            background: rgba(128, 174, 233, 0.15);
+            border: 2px solid rgba(128, 174, 233, 0.4);
+        }
+
+        /* Animations */
+        @keyframes floatSlow { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+        .animate-float { animation: floatSlow 4s ease-in-out infinite; }
+
+        @keyframes blobMove {
+            0%,100% { transform: translate(0,0) scale(1); }
+            33% { transform: translate(40px,-30px) scale(1.1); }
+            66% { transform: translate(-30px,30px) scale(0.95); }
+        }
+        .blob { animation: blobMove 14s ease-in-out infinite; }
+
+        @keyframes twinkle { 0%,100% { opacity: .15; transform: scale(.8); } 50% { opacity: .9; transform: scale(1.2); } }
+        .star { position: fixed; pointer-events: none; z-index: 0; color: #80AEE9; animation: twinkle var(--d,4s) ease-in-out infinite; }
+
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .marquee-track { animation: marquee 25s linear infinite; width: max-content; }
+        .marquee:hover .marquee-track { animation-play-state: paused; }
+
+        @keyframes shine { 0% { transform: translateX(-120%) skewX(-20deg); } 60%,100% { transform: translateX(260%) skewX(-20deg); } }
+        .shine::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 40%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(247,242,224,.22), transparent);
+            animation: shine 3.5s ease-in-out infinite;
+        }
+
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        .gradient-text {
+            background: linear-gradient(90deg, #80AEE9, #F7F2E0, #80AEE9);
+            background-size: 200% auto;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        .cursor-blink::after { content: '|'; animation: blink 1s infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Polaroid */
+        .polaroid-frame {
+            background-color: #F7F2E0; padding: 12px 12px 35px 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: box-shadow .3s ease;
+        }
+        .polaroid-frame:hover { box-shadow: 0 20px 45px rgba(128,174,233,0.45); }
+
+        /* Reveal on scroll */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.show { opacity: 1; transform: none; }
+
+        /* Tilt card */
+        .tilt { transform-style: preserve-3d; transition: transform .15s ease-out, border-color .3s, box-shadow .3s; will-change: transform; }
+        .tilt:hover { box-shadow: 0 20px 45px rgba(128,174,233,.25); }
+
+        /* Cursor glow */
+        #cursorGlow {
+            position: fixed; width: 380px; height: 380px; border-radius: 50%; pointer-events: none; z-index: 1;
+            background: radial-gradient(circle, rgba(128,174,233,.16) 0%, transparent 65%);
+            transform: translate(-50%,-50%); transition: opacity .3s;
+        }
+
+        /* Modal */
+        .modal-box { transform: scale(.9) translateY(20px); transition: transform .35s cubic-bezier(.175,.885,.32,1.275); }
+        .modal-open .modal-box { transform: none; }
+
+        /* Filter animation */
+        .project-card { transition: opacity .35s ease, transform .35s ease; }
+        .project-card.hide { opacity: 0; transform: scale(.92); }
+
+        /* Nav active */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0;
+            background: #80AEE9; transition: width .3s;
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: #80AEE9; }
+
+        /* Confetti */
+        .confetti { position: fixed; pointer-events: none; z-index: 100; font-size: 18px; animation: pop 1s ease-out forwards; }
+        @keyframes pop {
+            0% { transform: translate(0,0) scale(.5); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(1.2) rotate(var(--r)); opacity: 0; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #3D000E; }
+        ::-webkit-scrollbar-thumb { background: #80AEE9; border-radius: 4px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+        @media (hover: none) { #cursorGlow { display: none; } }
+    </style>
+</head>
+<body class="bg-bordeaux-glow min-h-screen relative overflow-x-hidden">
+
+    <!-- Scroll progress -->
+    <div id="progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-coolHorizon to-ivoryMist z-50" style="width:0%"></div>
+    <div id="cursorGlow"></div>
+
+    <!-- Ambient blobs -->
+    <div class="fixed -top-24 -left-24 w-96 h-96 bg-coolHorizon/20 rounded-full blur-3xl pointer-events-none blob"></div>
+    <div class="fixed top-1/2 -right-24 w-96 h-96 bg-bordeauxLight/40 rounded-full blur-3xl pointer-events-none blob" style="animation-delay:-6s"></div>
+    <div id="stars"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-40 bg-nightBordeaux/80 backdrop-blur-md border-b border-ivoryMist/15">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="font-playful text-2xl font-bold tracking-wider text-ivoryMist flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-coolHorizon animate-pulse"></span>
+                STEPHANI<span class="text-coolHorizon text-sm font-sans">.dev</span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-ivoryMist/80">
+                <a href="#about" class="nav-link">Tentang</a>
+                <a href="#certifications" class="nav-link">Sertifikasi</a>
+                <a href="#skills" class="nav-link">Keahlian</a>
+                <a href="#projects" class="nav-link">Karya</a>
+                <a href="#contact" class="nav-link">Kontak</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="https://github.com/stephani689" target="_blank" class="px-4 py-2 rounded-full bg-coolHorizon text-nightBordeaux font-bold text-xs hover:bg-ivoryMist transition-all transform hover:scale-105 shadow-md flex items-center gap-2">
+                    <i class="fa-brands fa-github text-sm"></i> GitHub
+                </a>
+                <button id="menuBtn" class="md:hidden text-ivoryMist text-xl w-9 h-9 flex items-center justify-center" aria-label="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-nightBordeaux/95 border-t border-ivoryMist/10 px-6 py-4 space-y-3 text-sm font-semibold">
+            <a href="#about" class="block hover:text-coolHorizon">Tentang</a>
+            <a href="#certifications" class="block hover:text-coolHorizon">Sertifikasi</a>
+            <a href="#skills" class="block hover:text-coolHorizon">Keahlian</a>
+            <a href="#projects" class="block hover:text-coolHorizon">Karya</a>
+            <a href="#contact" class="block hover:text-coolHorizon">Kontak</a>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+
+    <!-- HERO -->
+    <section id="about" class="pt-32 pb-12 px-6 max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative">
+        <div class="flex-1 space-y-6 text-center lg:text-left reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-coolHorizon/20 text-coolHorizon border border-coolHorizon/40 text-xs font-semibold animate-float">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Welcome to My Creative Space!
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-playful font-bold leading-tight text-ivoryMist">
+                Halo, Aku <span class="gradient-text underline decoration-wavy decoration-coolHorizon/50">Stephani</span>! 🌸
+            </h1>
+
+            <p class="text-xl font-medium text-ivoryMist/90 min-h-[1.75rem]">
+                Fokus di <span id="typingText" class="text-coolHorizon cursor-blink font-bold"></span>
+            </p>
+
+            <p class="text-ivoryMist/80 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                Suka merancang website sederhana yang rapi, responsif, dan interaktif. Selalu antusias mempelajari teknologi baru serta siap beradaptasi dengan cepat!
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                <a href="#projects" class="px-6 py-3 rounded-2xl bg-coolHorizon text-nightBordeaux font-bold text-sm hover:bg-ivoryMist shadow-lg shadow-coolHorizon/20 transition-all transform hover:-translate-y-1">
+                    Jelajahi Karya Interaktif <i class="fa-solid fa-arrow-down ml-1"></i>
+                </a>
+                <button onclick="copyEmail(event)" class="px-6 py-3 rounded-2xl custom-card hover:border-coolHorizon text-ivoryMist font-bold text-sm transition-all hover:-translate-y-1 flex items-center gap-2">
+                    <i class="fa-solid fa-envelope text-coolHorizon"></i> <span id="copyBtnText">Salin Email</span>
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-3 pt-6 max-w-md mx-auto lg:mx-0">
+                <div class="custom-card rounded-2xl py-3 text-center">
+                    <p class="font-playful text-2xl font-bold text-coolHorizon"><span class="counter" data-target="1">0</span></p>
+                    <p class="text-[10px] text-ivoryMist/70 font-semibold">Sertifikasi</p>
+                </div>
+                <div class="custom-card rounded-2xl py-3 text-center">
+                    <p class="font-playful text-2xl font-bold text-coolHorizon"><span class="counter" data-target="3">0</span></p>
+                    <p class="text-[10px] text-ivoryMist/70 font-semibold">Karya Pilihan</p>
+                </div>
+                <div class="custom-card rounded-2xl py-3 text-center">
+                    <p class="font-playful text-2xl font-bold text-coolHorizon"><span class="counter" data-target="100">0</span>%</p>
+                    <p class="text-[10px] text-ivoryMist/70 font-semibold">Semangat</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Polaroid -->
+        <div class="w-full lg:w-5/12 flex justify-center relative reveal" style="transition-delay:.15s">
+            <div class="polaroid-frame tilt rounded-2xl rotate-2 relative z-10 w-72 sm:w-80" data-tilt="8">
+                <div class="w-full h-80 rounded-lg overflow-hidden bg-nightBordeaux relative flex items-center justify-center">
+                    <span id="avatarFallback" class="hidden font-playful text-7xl text-coolHorizon font-bold absolute">S</span>
+                    <img src="assets/profil.png" alt="Foto Stephani" class="w-full h-full object-cover relative z-10"
+                         onerror="this.style.display='none'; document.getElementById('avatarFallback').classList.remove('hidden');">
+                </div>
+                <div class="pt-3 text-center">
+                    <p class="font-playful text-nightBordeaux font-bold text-lg">Stephani ✨</p>
+                    <p class="text-xs text-nightBordeaux/70 font-semibold">Web Developer Assistant</p>
+                </div>
+            </div>
+
+            <div class="absolute -top-4 -left-2 z-20 bg-coolHorizon text-nightBordeaux px-3 py-1.5 rounded-full font-playful font-bold text-xs shadow-lg rotate-12 animate-float">
+                👋 Hello World!
+            </div>
+            <div class="absolute -bottom-4 -right-2 z-20 custom-card bg-nightBordeaux/90 border-coolHorizon px-4 py-2 rounded-2xl text-ivoryMist font-bold text-xs shadow-xl -rotate-6 flex items-center gap-2 animate-float" style="animation-delay:-2s">
+                <i class="fa-solid fa-bolt text-coolHorizon"></i> Fast Learner
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee overflow-hidden border-y border-ivoryMist/10 bg-nightBordeaux/40 py-4 my-8">
+        <div class="marquee-track flex gap-10 text-sm font-playful font-semibold text-ivoryMist/70">
+            <script>
+                document.write(
+                    [1,2].map(() => ['HTML5','Tailwind CSS','JavaScript','Responsive Design','DOM Manipulation','UI/UX','Clean Code','Fast Learner']
+                        .map(t => `<span class="flex items-center gap-10 whitespace-nowrap"><span>${t}</span><i class="fa-solid fa-star text-coolHorizon text-[10px]"></i></span>`).join('')
+                    ).join('')
+                );
+            </script>
+        </div>
+    </div>
+
+    <!-- SERTIFIKASI -->
+    <section id="certifications" class="py-16 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-10 reveal">
+            <h2 class="font-playful text-3xl font-bold text-ivoryMist mb-2">Sertifikasi Resmi</h2>
+            <div class="w-16 h-1 bg-coolHorizon mx-auto rounded-full"></div>
+        </div>
+
+        <div class="horizon-card shine p-8 rounded-3xl max-w-3xl mx-auto relative overflow-hidden transition-all hover:scale-[1.02] reveal">
+            <div class="flex flex-col sm:flex-row items-center gap-6 relative z-10">
+                <div class="w-20 h-20 rounded-2xl bg-coolHorizon text-nightBordeaux flex items-center justify-center text-4xl shrink-0 font-bold shadow-lg animate-float">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="space-y-2 text-center sm:text-left flex-1">
+                    <span class="inline-block px-3 py-1 rounded-full bg-ivoryMist text-nightBordeaux text-xs font-bold mb-1">
+                        ✓ Terkompetensi Resmi
+                    </span>
+                    <h3 class="text-2xl font-bold text-ivoryMist font-playful">Asisten Pemrograman Web</h3>
+                    <p class="text-sm text-coolHorizon font-semibold">Certified Web Programmer Assistant</p>
+                    <p class="text-ivoryMist/80 text-xs sm:text-base leading-relaxed pt-1">
+                        Memiliki kualifikasi dasar dalam membuat dan merancang website secara terstruktur, bersih, dan siap diimplementasikan.
+                    </p>
+                    <div class="pt-3">
+                        <button onclick="openModal('certModal')" class="px-5 py-2.5 rounded-xl bg-coolHorizon hover:bg-ivoryMist text-nightBordeaux font-bold text-xs transition-all shadow-md flex items-center gap-2 mx-auto sm:mx-0 hover:-translate-y-0.5">
+                            <i class="fa-solid fa-expand"></i> Buka Dokumen Sertifikat Interaktif
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEAHLIAN -->
+    <section id="skills" class="py-16 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-12 reveal">
+            <h2 class="font-playful text-3xl font-bold text-ivoryMist mb-2">Technical & Personal Skills</h2>
+            <p class="text-ivoryMist/70 text-sm">Kemampuan teknis dan pola pikir utama</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="custom-card tilt p-6 rounded-2xl hover:border-coolHorizon transition-all group reveal" data-tilt="8">
+                <div class="w-12 h-12 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center text-2xl mb-4 group-hover:bg-coolHorizon group-hover:text-nightBordeaux group-hover:rotate-6 transition-all">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <h3 class="font-playful text-lg font-bold text-ivoryMist mb-2">Web Design Sederhana</h3>
+                <p class="text-ivoryMist/80 text-xs leading-relaxed">Merancang antarmuka web yang rapi, modern, mudah digunakan, serta responsif di semua layar.</p>
+            </div>
+
+            <div class="custom-card tilt p-6 rounded-2xl hover:border-coolHorizon transition-all group reveal" data-tilt="8" style="transition-delay:.1s">
+                <div class="w-12 h-12 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center text-2xl mb-4 group-hover:bg-coolHorizon group-hover:text-nightBordeaux group-hover:rotate-6 transition-all">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <h3 class="font-playful text-lg font-bold text-ivoryMist mb-2">Frontend Fundamentals</h3>
+                <p class="text-ivoryMist/80 text-xs leading-relaxed">Menguasai struktur HTML5, styling Tailwind CSS, serta manipulasi DOM JavaScript.</p>
+            </div>
+
+            <div class="custom-card tilt p-6 rounded-2xl hover:border-coolHorizon transition-all group reveal" data-tilt="8" style="transition-delay:.2s">
+                <div class="w-12 h-12 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center text-2xl mb-4 group-hover:bg-coolHorizon group-hover:text-nightBordeaux group-hover:rotate-6 transition-all">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3 class="font-playful text-lg font-bold text-ivoryMist mb-2">Growth Mindset & Adaptive</h3>
+                <p class="text-ivoryMist/80 text-xs leading-relaxed">Siap dipandu dan cepat mempelajari framework atau tools baru sesuai kebutuhan proyek.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- KARYA -->
+    <section id="projects" class="py-16 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-10 reveal">
+            <h2 class="font-playful text-3xl font-bold text-ivoryMist mb-2">Karya & Eksplorasi Interaktif</h2>
+            <p class="text-ivoryMist/70 text-sm">Beberapa karya pilihan. Filter berdasarkan kategori atau klik tag teknologi</p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3 mb-4 reveal">
+            <button data-filter="all" class="filter-btn px-5 py-2 rounded-full text-xs font-bold bg-coolHorizon text-nightBordeaux transition-all">Semua Karya</button>
+            <button data-filter="web" class="filter-btn px-5 py-2 rounded-full text-xs font-bold custom-card text-ivoryMist hover:border-coolHorizon transition-all">Web Design</button>
+            <button data-filter="app" class="filter-btn px-5 py-2 rounded-full text-xs font-bold custom-card text-ivoryMist hover:border-coolHorizon transition-all">Web App</button>
+        </div>
+
+        <!-- Info filter tag aktif -->
+        <div id="techInfo" class="hidden text-center mb-6">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-coolHorizon/20 text-coolHorizon text-xs font-bold border border-coolHorizon/40">
+                Tag aktif: <b id="techInfoName"></b>
+                <button onclick="resetFilter()" class="hover:text-ivoryMist"><i class="fa-solid fa-circle-xmark"></i></button>
+            </span>
+        </div>
+        <div class="mb-6"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+
+            <!-- Card 1 -->
+            <div class="project-card tilt custom-card rounded-2xl overflow-hidden hover:border-coolHorizon flex flex-col reveal" data-tilt="6" data-category="web" data-tech="html tailwind js">
+                <div class="h-44 bg-bordeauxDark relative overflow-hidden group border-b border-ivoryMist/10">
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=600" alt="Preview Proyek 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100" onerror="this.style.display='none'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-nightBordeaux/80 to-transparent"></div>
+                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-nightBordeaux/90 text-coolHorizon text-[10px] font-bold border border-coolHorizon/40">Web Design</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Interactive Web Portfolio</h3>
+                        <p class="text-ivoryMist/70 text-xs mt-2 leading-relaxed">Portofolio estetik dengan kombinasi Night Bordeaux & Cool Horizon, typing effect, dan pop-up interaktif.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span onclick="filterByTech('html')" class="tech-tag">#HTML5</span>
+                            <span onclick="filterByTech('tailwind')" class="tech-tag">#Tailwind</span>
+                            <span onclick="filterByTech('js')" class="tech-tag">#JS</span>
+                        </div>
+                        <button onclick="openProjectModal('portofolio')" class="detail-btn">
+                            <i class="fa-solid fa-circle-info"></i> Quick Detail & Specs
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="project-card tilt custom-card rounded-2xl overflow-hidden hover:border-coolHorizon flex flex-col reveal" data-tilt="6" data-category="app" data-tech="html css js" style="transition-delay:.1s">
+                <div class="h-44 bg-bordeauxDark relative overflow-hidden group border-b border-ivoryMist/10">
+                    <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=600" alt="Preview Proyek 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100" onerror="this.style.display='none'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-nightBordeaux/80 to-transparent"></div>
+                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-nightBordeaux/90 text-coolHorizon text-[10px] font-bold border border-coolHorizon/40">Web App</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Task Coordinator Interface</h3>
+                        <p class="text-ivoryMist/70 text-xs mt-2 leading-relaxed">Aplikasi pengelola tugas dengan filter prioritas dinamis dan antarmuka interaktif yang bersih.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span onclick="filterByTech('html')" class="tech-tag">#HTML/CSS</span>
+                            <span onclick="filterByTech('js')" class="tech-tag">#JS DOM</span>
+                        </div>
+                        <button onclick="openProjectModal('taskapp')" class="detail-btn">
+                            <i class="fa-solid fa-circle-info"></i> Quick Detail & Specs
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="project-card tilt custom-card rounded-2xl overflow-hidden hover:border-coolHorizon flex flex-col reveal" data-tilt="6" data-category="web" data-tech="html css" style="transition-delay:.2s">
+                <div class="h-44 bg-bordeauxDark relative overflow-hidden group border-b border-ivoryMist/10">
+                    <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=600" alt="Preview Proyek 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100" onerror="this.style.display='none'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-nightBordeaux/80 to-transparent"></div>
+                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-nightBordeaux/90 text-coolHorizon text-[10px] font-bold border border-coolHorizon/40">Web Design</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Edukasi Landing Page</h3>
+                        <p class="text-ivoryMist/70 text-xs mt-2 leading-relaxed">Desain halaman informasi dengan penyusunan konten yang terstruktur, nyaman dibaca, serta responsif.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span onclick="filterByTech('css')" class="tech-tag">#Responsive</span>
+                            <span onclick="filterByTech('css')" class="tech-tag">#CSS</span>
+                        </div>
+                        <button onclick="openProjectModal('edumodule')" class="detail-btn">
+                            <i class="fa-solid fa-circle-info"></i> Quick Detail & Specs
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tombol lihat semua karya -->
+        <div class="text-center mt-10 reveal">
+            <a href="https://github.com/stephani689?tab=repositories" target="_blank"
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl custom-card hover:border-coolHorizon text-ivoryMist font-bold text-sm transition-all hover:-translate-y-1">
+                <i class="fa-brands fa-github text-coolHorizon text-lg"></i>
+                Lihat Semua Karya di GitHub
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- KONTAK -->
+    <section id="contact" class="py-16 px-6 max-w-4xl mx-auto">
+        <div class="horizon-card p-8 sm:p-12 rounded-3xl text-center space-y-6 relative overflow-hidden reveal">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-coolHorizon/20 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-ivoryMist/10 rounded-full blur-2xl"></div>
+            <h2 class="font-playful text-3xl sm:text-4xl font-bold text-ivoryMist relative">Mari Terhubung & Berdiskusi! 💌</h2>
+            <p class="text-ivoryMist/80 text-sm max-w-lg mx-auto leading-relaxed relative">
+                Tertarik untuk berkolaborasi atau punya ide proyek web yang ingin diwujudkan bersama? Hubungi aku melalui GitHub atau Email!
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 relative">
+                <a href="https://github.com/stephani689" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-nightBordeaux text-ivoryMist hover:text-coolHorizon border border-coolHorizon/40 font-bold text-sm transition-all hover:-translate-y-1 flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fa-brands fa-github text-lg"></i> Kunjungi GitHub
+                </a>
+                <button onclick="copyEmail(event)" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-coolHorizon text-nightBordeaux font-bold text-sm hover:bg-ivoryMist transition-all hover:-translate-y-1 flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-envelope"></i> <span id="copyBtnText2">Salin Alamat Email</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <footer class="relative z-10 py-8 text-center text-xs text-ivoryMist/50 border-t border-ivoryMist/10">
+        <p>&copy; 2026 Stephani. Built with passion & creativity. 💙</p>
+    </footer>
+
+    <!-- Back to top -->
+    <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-coolHorizon text-nightBordeaux shadow-xl opacity-0 pointer-events-none transition-all hover:scale-110" aria-label="Kembali ke atas">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- MODAL SERTIFIKAT -->
+    <div id="certModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-nightBordeaux/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 p-4">
+        <div class="modal-box custom-card p-6 sm:p-8 rounded-3xl max-w-xl w-full relative space-y-5 text-left border-coolHorizon shadow-2xl">
+            <button onclick="closeModal('certModal')" class="absolute top-4 right-4 text-ivoryMist/70 hover:text-coolHorizon text-xl hover:rotate-90 transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 border-b border-ivoryMist/15 pb-3">
+                <i class="fa-solid fa-award text-coolHorizon text-2xl"></i>
+                <div>
+                    <h3 class="font-playful text-lg font-bold text-ivoryMist">Sertifikasi Kompetensi Resmi</h3>
+                    <p class="text-[11px] text-coolHorizon">Asisten Pemrograman Web - Verified & Active</p>
+                </div>
+            </div>
+
+            <div class="shine bg-bordeauxDark p-6 rounded-2xl border border-coolHorizon/40 text-center space-y-3 relative overflow-hidden">
+                <i class="fa-solid fa-circle-check text-4xl text-coolHorizon mb-1 animate-bounce"></i>
+                <h4 class="font-playful text-xl font-bold text-ivoryMist uppercase tracking-wide">CERTIFIED WEB PROGRAMMER ASSISTANT</h4>
+                <p class="text-xs text-ivoryMist/70">Diberikan Kepada:</p>
+                <p class="text-xl font-bold text-coolHorizon font-playful tracking-wider">STEPHANI DELLA CHRISTIN ZAI</p>
+                <div class="w-12 h-0.5 bg-coolHorizon mx-auto"></div>
+                <p class="text-xs text-ivoryMist/80 italic">"Dinyatakan Terkompetensi dalam pembuatan & perancangan sistem pemrograman web dasar"</p>
+                <p class="text-[10px] text-coolHorizon font-mono">NO. REG: 62199 2513 0 0012647 2026</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-ivoryMist/10">
+                <a href="assets/sertifikat.pdf" target="_blank" class="text-xs text-coolHorizon hover:text-ivoryMist font-bold flex items-center gap-2 transition-colors">
+                    <i class="fa-solid fa-file-pdf text-base"></i> Buka / Unduh Dokumen PDF Asli <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+                <button onclick="closeModal('certModal')" class="px-5 py-2 rounded-xl bg-coolHorizon text-nightBordeaux font-bold text-xs shadow-md hover:bg-ivoryMist transition-all w-full sm:w-auto">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PROYEK -->
+    <div id="projectModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-nightBordeaux/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 p-4">
+        <div class="modal-box custom-card p-6 sm:p-8 rounded-3xl max-w-lg w-full relative space-y-4 text-left border-coolHorizon shadow-2xl">
+            <button onclick="closeModal('projectModal')" class="absolute top-4 right-4 text-ivoryMist/70 hover:text-coolHorizon text-xl hover:rotate-90 transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span id="projModalTag" class="text-xs font-bold px-3 py-1 rounded-full bg-coolHorizon text-nightBordeaux inline-block">Web Design</span>
+            <h3 id="projModalTitle" class="font-playful text-2xl font-bold text-ivoryMist">Judul Proyek</h3>
+            <p id="projModalDesc" class="text-xs sm:text-sm text-ivoryMist/80 leading-relaxed">Deskripsi proyek.</p>
+
+            <div class="bg-bordeauxDark/80 p-4 rounded-xl border border-ivoryMist/10 space-y-2">
+                <h4 class="text-xs font-bold text-coolHorizon uppercase">Fitur Utama Proyek:</h4>
+                <ul id="projModalFeatures" class="text-xs text-ivoryMist/80 space-y-1 list-disc list-inside"></ul>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+                <a href="https://github.com/stephani689" target="_blank" class="px-5 py-2 rounded-xl bg-coolHorizon text-nightBordeaux font-bold text-xs flex items-center gap-2 hover:bg-ivoryMist transition-all">
+                    <i class="fa-brands fa-github"></i> Lihat Code
+                </a>
+                <button onclick="closeModal('projectModal')" class="px-4 py-2 rounded-xl custom-card text-ivoryMist text-xs font-bold hover:border-coolHorizon transition-all">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .tech-tag { cursor: pointer; font-size: 10px; padding: 4px 10px; border-radius: 6px; background: rgba(128,174,233,.15); color: #80AEE9; font-family: monospace; font-weight: 700; transition: all .2s; }
+        .tech-tag:hover { background: #80AEE9; color: #5B0015; transform: translateY(-2px); }
+        .detail-btn { width: 100%; padding: 10px; border-radius: 12px; background: rgba(128,174,233,.2); color: #80AEE9; font-weight: 700; font-size: 12px; border: 1px solid rgba(128,174,233,.4); display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s; }
+        .detail-btn:hover { background: #80AEE9; color: #5B0015; }
+    </style>
+
+    <script>
+        /* ===== Typing Effect ===== */
+        const words = ["Web Designer & Developer", "Certified Web Assistant", "Fast & Eager Learner"];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+        const typingElement = document.getElementById("typingText");
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            charIndex += isDeleting ? -1 : 1;
+            typingElement.textContent = currentWord.substring(0, charIndex);
+            let speed = isDeleting ? 40 : 80;
+            if (!isDeleting && charIndex === currentWord.length) { speed = 2000; isDeleting = true; }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; speed = 500; }
+            setTimeout(typeEffect, speed);
+        }
+        document.addEventListener("DOMContentLoaded", typeEffect);
+
+        /* ===== Floating stars ===== */
+        (function makeStars() {
+            const wrap = document.getElementById('stars');
+            const icons = ['✦', '✧', '★', '·'];
+            for (let i = 0; i < 22; i++) {
+                const s = document.createElement('span');
+                s.className = 'star';
+                s.textContent = icons[Math.floor(Math.random() * icons.length)];
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.top = Math.random() * 100 + 'vh';
+                s.style.fontSize = (6 + Math.random() * 12) + 'px';
+                s.style.setProperty('--d', (3 + Math.random() * 5) + 's');
+                s.style.animationDelay = (-Math.random() * 5) + 's';
+                wrap.appendChild(s);
+            }
+        })();
+
+        /* ===== Cursor glow ===== */
+        const glow = document.getElementById('cursorGlow');
+        window.addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+
+        /* ===== Scroll: progress, to-top, active nav ===== */
+        const progress = document.getElementById('progress');
+        const toTop = document.getElementById('toTop');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = [...document.querySelectorAll('section[id]')];
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+            progress.style.width = pct + '%';
+            if (h.scrollTop > 400) { toTop.classList.remove('opacity-0', 'pointer-events-none'); }
+            else { toTop.classList.add('opacity-0', 'pointer-events-none'); }
+            let current = sections[0].id;
+            sections.forEach(sec => { if (h.scrollTop + 140 >= sec.offsetTop) current = sec.id; });
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+        }, { passive: true });
+
+        /* ===== Mobile menu ===== */
+        const mobileMenu = document.getElementById('mobileMenu');
+        document.getElementById('menuBtn').addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        /* ===== Reveal on scroll + counters ===== */
+        function animateCounter(el) {
+            const target = +el.dataset.target; let n = 0;
+            const step = Math.max(1, Math.ceil(target / 40));
+            const t = setInterval(() => {
+                n += step;
+                if (n >= target) { n = target; clearInterval(t); }
+                el.textContent = n;
+            }, 30);
+        }
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    entry.target.querySelectorAll('.counter').forEach(animateCounter);
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        /* ===== 3D Tilt ===== */
+        document.querySelectorAll('.tilt').forEach(card => {
+            const max = +card.dataset.tilt || 8;
+            const baseRot = card.classList.contains('rotate-2') ? 'rotate(2deg) ' : '';
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - 0.5;
+                const y = (e.clientY - r.top) / r.height - 0.5;
+                card.style.transform = `${baseRot}perspective(800px) rotateY(${x * max}deg) rotateX(${-y * max}deg) translateY(-4px)`;
+            });
+            card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+        });
+
+        /* ===== Filter proyek ===== */
+        const cards = document.querySelectorAll('.project-card');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const techInfo = document.getElementById('techInfo');
+
+        function setActiveBtn(activeBtn) {
+            filterBtns.forEach(btn => {
+                btn.classList.remove('bg-coolHorizon', 'text-nightBordeaux', 'custom-card', 'text-ivoryMist');
+                if (btn === activeBtn) btn.classList.add('bg-coolHorizon', 'text-nightBordeaux');
+                else btn.classList.add('custom-card', 'text-ivoryMist');
+            });
+        }
+        function applyFilter(test) {
+            cards.forEach(card => {
+                if (test(card)) {
+                    card.style.display = 'flex';
+                    requestAnimationFrame(() => card.classList.remove('hide'));
+                } else {
+                    card.classList.add('hide');
+                    setTimeout(() => { if (card.classList.contains('hide')) card.style.display = 'none'; }, 350);
+                }
+            });
+        }
+        filterBtns.forEach(btn => btn.addEventListener('click', () => {
+            techInfo.classList.add('hidden');
+            setActiveBtn(btn);
+            const cat = btn.dataset.filter;
+            applyFilter(c => cat === 'all' || c.dataset.category === cat);
+        }));
+        function filterByTech(tech) {
+            setActiveBtn(null);
+            document.getElementById('techInfoName').textContent = '#' + tech;
+            techInfo.classList.remove('hidden');
+            applyFilter(c => (c.dataset.tech || '').split(' ').includes(tech));
+        }
+        function resetFilter() {
+            techInfo.classList.add('hidden');
+            setActiveBtn(document.querySelector('[data-filter="all"]'));
+            applyFilter(() => true);
+        }
+
+        /* ===== Modals ===== */
+        function openModal(id) {
+            const m = document.getElementById(id);
+            m.classList.remove('opacity-0', 'pointer-events-none');
+            m.classList.add('opacity-100', 'pointer-events-auto', 'modal-open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(id) {
+            const m = document.getElementById(id);
+            m.classList.remove('opacity-100', 'pointer-events-auto', 'modal-open');
+            m.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+        }
+        document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); }));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-open').forEach(m => closeModal(m.id)); });
+
+        const projectData = {
+            portofolio: {
+                title: "Interactive Web Portfolio", tag: "Web Design",
+                desc: "Website portofolio estetik dengan nuansa warna Night Bordeaux dan Cool Horizon, dilengkapi dengan animasi Polaroid photo frame, tag filter interaktif, dan pop-up sertifikat.",
+                features: ["Desain Playful & Professional UI/UX", "Efek pengetikan teks otomatis (Typing Effect)", "Filter tag teknologi interaktif & modal sertifikat"]
+            },
+            taskapp: {
+                title: "Task Coordinator Interface", tag: "Web App",
+                desc: "Aplikasi manajemen tugas interaktif dengan filter status dan antarmuka visual yang bersih.",
+                features: ["Interaktivitas DOM JavaScript", "Filter tugas prioritas", "Tampilan responsif di semua layar"]
+            },
+            edumodule: {
+                title: "Edukasi Landing Page", tag: "Web Design",
+                desc: "Desain website sederhana untuk penyampaian informasi dan materi edukasi digital secara terstruktur.",
+                features: ["Struktur layout rapi dan bersih", "Responsif di perangkat HP & Laptop", "Kecepatan muat halaman tinggi"]
+            }
+        };
+        function openProjectModal(key) {
+            const data = projectData[key];
+            if (!data) return;
+            document.getElementById('projModalTitle').textContent = data.title;
+            document.getElementById('projModalTag').textContent = data.tag;
+            document.getElementById('projModalDesc').textContent = data.desc;
+            const list = document.getElementById('projModalFeatures');
+            list.innerHTML = '';
+            data.features.forEach(f => { const li = document.createElement('li'); li.textContent = f; list.appendChild(li); });
+            openModal('projectModal');
+        }
+
+        /* ===== Copy email + confetti ===== */
+        function copyEmail(e) {
+            const email = "dczstephani@gmail.com";
+            if (navigator.clipboard) navigator.clipboard.writeText(email).catch(() => {});
+            const b1 = document.getElementById('copyBtnText');
+            const b2 = document.getElementById('copyBtnText2');
+            if (b1) b1.textContent = "Email Tersalin! ✓";
+            if (b2) b2.textContent = "Email Tersalin! ✓";
+            setTimeout(() => {
+                if (b1) b1.textContent = "Salin Email";
+                if (b2) b2.textContent = "Salin Alamat Email";
+            }, 2000);
+
+            const ox = e.clientX, oy = e.clientY;
+            const emojis = ['💙', '✨', '🌸', '⭐', '💌'];
+            for (let i = 0; i < 14; i++) {
+                const c = document.createElement('span');
+                c.className = 'confetti';
+                c.textContent = emojis[i % emojis.length];
+                c.style.left = ox + 'px'; c.style.top = oy + 'px';
+                c.style.setProperty('--x', (Math.random() * 240 - 120) + 'px');
+                c.style.setProperty('--y', (Math.random() * -200 - 20) + 'px');
+                c.style.setProperty('--r', (Math.random() * 360) + 'deg');
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
