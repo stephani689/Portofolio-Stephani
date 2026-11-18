@@ -33,7 +33,7 @@ Website ini dirancang dengan gaya modern, responsif, dan interaktif menggunakan 
 
 ---
 
-![porto](https://github.com/user-attachments/assets/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+![porto](assets/porto.png)
 
 ## Cara Menjalankan Secara Lokal (Local Development)
 
