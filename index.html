@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stephani | Interactive Web Portfolio</title>
+    <meta name="description" content="Portofolio Stephani: karya web, sertifikasi, pendidikan, dan keahlian di bidang pemrograman web dan sistem informasi.">
+    <meta name="theme-color" content="#5B0015">
+    <meta property="og:title" content="Stephani | Interactive Web Portfolio">
+    <meta property="og:description" content="Karya web, sertifikasi, pendidikan, dan keahlian Stephani dalam satu portofolio interaktif.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -141,6 +148,7 @@
         }
         @media (hover: none) { #cursorGlow { display: none; } }
     </style>
+    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body class="bg-bordeaux-glow min-h-screen relative overflow-x-hidden">
 
@@ -163,6 +171,7 @@
 
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-ivoryMist/80">
                 <a href="#about" class="nav-link">Tentang</a>
+                <a href="#education" class="nav-link">Pendidikan</a>
                 <a href="#certifications" class="nav-link">Sertifikasi</a>
                 <a href="#skills" class="nav-link">Keahlian</a>
                 <a href="#projects" class="nav-link">Karya</a>
@@ -170,7 +179,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="https://github.com/stephani689" target="_blank" class="px-4 py-2 rounded-full bg-coolHorizon text-nightBordeaux font-bold text-xs hover:bg-ivoryMist transition-all transform hover:scale-105 shadow-md flex items-center gap-2">
+                <a href="https://github.com/stephani689" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-coolHorizon text-nightBordeaux font-bold text-xs hover:bg-ivoryMist transition-all transform hover:scale-105 shadow-md flex items-center gap-2">
                     <i class="fa-brands fa-github text-sm"></i> GitHub
                 </a>
                 <button id="menuBtn" class="md:hidden text-ivoryMist text-xl w-9 h-9 flex items-center justify-center" aria-label="Menu">
@@ -181,6 +190,7 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-nightBordeaux/95 border-t border-ivoryMist/10 px-6 py-4 space-y-3 text-sm font-semibold">
             <a href="#about" class="block hover:text-coolHorizon">Tentang</a>
+            <a href="#education" class="block hover:text-coolHorizon">Pendidikan</a>
             <a href="#certifications" class="block hover:text-coolHorizon">Sertifikasi</a>
             <a href="#skills" class="block hover:text-coolHorizon">Keahlian</a>
             <a href="#projects" class="block hover:text-coolHorizon">Karya</a>
@@ -212,6 +222,9 @@
             <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
                 <a href="#projects" class="px-6 py-3 rounded-2xl bg-coolHorizon text-nightBordeaux font-bold text-sm hover:bg-ivoryMist shadow-lg shadow-coolHorizon/20 transition-all transform hover:-translate-y-1">
                     Jelajahi Karya Interaktif <i class="fa-solid fa-arrow-down ml-1"></i>
+                </a>
+                <a data-link="cv" href="#" download class="px-6 py-3 rounded-2xl custom-card hover:border-coolHorizon text-ivoryMist font-bold text-sm transition-all hover:-translate-y-1 flex items-center gap-2">
+                    <i class="fa-solid fa-file-arrow-down text-coolHorizon"></i> Download CV
                 </a>
                 <button onclick="copyEmail(event)" class="px-6 py-3 rounded-2xl custom-card hover:border-coolHorizon text-ivoryMist font-bold text-sm transition-all hover:-translate-y-1 flex items-center gap-2">
                     <i class="fa-solid fa-envelope text-coolHorizon"></i> <span id="copyBtnText">Salin Email</span>
@@ -263,13 +276,56 @@
         <div class="marquee-track flex gap-10 text-sm font-playful font-semibold text-ivoryMist/70">
             <script>
                 document.write(
-                    [1,2].map(() => ['HTML5','Tailwind CSS','JavaScript','Responsive Design','DOM Manipulation','UI/UX','Clean Code','Fast Learner']
+                    [1,2].map(() => ['HTML5','Tailwind CSS','JavaScript','Responsive Design','DOM Manipulation','UI/UX','Clean Code','Problem Solving']
                         .map(t => `<span class="flex items-center gap-10 whitespace-nowrap"><span>${t}</span><i class="fa-solid fa-star text-coolHorizon text-[10px]"></i></span>`).join('')
                     ).join('')
                 );
             </script>
         </div>
     </div>
+
+    <!-- PENDIDIKAN -->
+    <section id="education" class="py-16 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-10 reveal">
+            <h2 class="font-playful text-3xl font-bold text-ivoryMist mb-2">Pendidikan</h2>
+            <div class="w-16 h-1 bg-coolHorizon mx-auto rounded-full"></div>
+        </div>
+
+        <div class="max-w-3xl mx-auto space-y-5">
+
+            <!-- EDIT: kampus, jurusan, dan tahun -->
+            <div class="custom-card tilt rounded-3xl p-6 sm:p-8 hover:border-coolHorizon transition-all reveal" data-tilt="4">
+                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+                    <div class="w-16 h-16 rounded-2xl bg-coolHorizon text-nightBordeaux flex items-center justify-center text-3xl shrink-0 shadow-lg animate-float">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left space-y-2">
+                        <span class="inline-block px-3 py-1 rounded-full bg-coolHorizon/20 text-coolHorizon border border-coolHorizon/40 text-[11px] font-bold">
+                            2024 – Sekarang
+                        </span>
+                        <h3 class="font-playful text-xl sm:text-2xl font-bold text-ivoryMist">Universitas Prima Indonesia (UNPRI)</h3>
+                        <p class="text-sm text-coolHorizon font-semibold">S1 Sistem Informasi · Medan</p>
+                        <p class="text-xs sm:text-sm text-ivoryMist/80 leading-relaxed">
+                            Mempelajari perancangan dan pengembangan sistem informasi, dari pemrograman, pengujian perangkat lunak, sampai penelitian.
+                        </p>
+                        <div class="flex flex-wrap justify-center sm:justify-start gap-2 pt-1">
+                            <span class="text-[10px] px-2.5 py-1 rounded-md bg-coolHorizon/15 text-coolHorizon font-mono font-bold">Pemrograman Mobile</span>
+                            <span class="text-[10px] px-2.5 py-1 rounded-md bg-coolHorizon/15 text-coolHorizon font-mono font-bold">Software Testing</span>
+                            <span class="text-[10px] px-2.5 py-1 rounded-md bg-coolHorizon/15 text-coolHorizon font-mono font-bold">Penelitian</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPSIONAL: pendidikan sebelumnya, hapus tanda komentar kalau mau dipakai
+            <div class="custom-card rounded-3xl p-6 sm:p-8 reveal">
+                <span class="inline-block px-3 py-1 rounded-full bg-coolHorizon/20 text-coolHorizon border border-coolHorizon/40 text-[11px] font-bold mb-2">20XX – 20XX</span>
+                <h3 class="font-playful text-xl font-bold text-ivoryMist">Nama Sekolah</h3>
+                <p class="text-sm text-coolHorizon font-semibold">Jurusan</p>
+            </div>
+            -->
+        </div>
+    </section>
 
     <!-- SERTIFIKASI -->
     <section id="certifications" class="py-16 px-6 max-w-6xl mx-auto">
@@ -306,32 +362,114 @@
     <section id="skills" class="py-16 px-6 max-w-6xl mx-auto">
         <div class="text-center mb-12 reveal">
             <h2 class="font-playful text-3xl font-bold text-ivoryMist mb-2">Technical & Personal Skills</h2>
-            <p class="text-ivoryMist/70 text-sm">Kemampuan teknis dan pola pikir utama</p>
+            <p class="text-ivoryMist/70 text-sm">Kemampuan teknis dan interpersonal yang kubawa di setiap proyek</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="custom-card tilt p-6 rounded-2xl hover:border-coolHorizon transition-all group reveal" data-tilt="8">
-                <div class="w-12 h-12 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center text-2xl mb-4 group-hover:bg-coolHorizon group-hover:text-nightBordeaux group-hover:rotate-6 transition-all">
-                    <i class="fa-solid fa-laptop-code"></i>
+        <!-- HARD SKILLS & SOFT SKILLS (masing-masing 4 item, tinggi kartu seimbang) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Hard Skills -->
+            <div class="custom-card rounded-3xl p-6 sm:p-8 hover:border-coolHorizon transition-all reveal h-full">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-11 h-11 rounded-xl bg-coolHorizon text-nightBordeaux flex items-center justify-center text-xl shadow-lg">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Hard Skills</h3>
+                        <p class="text-[11px] text-coolHorizon font-semibold">Kemampuan teknis</p>
+                    </div>
                 </div>
-                <h3 class="font-playful text-lg font-bold text-ivoryMist mb-2">Web Design Sederhana</h3>
-                <p class="text-ivoryMist/80 text-xs leading-relaxed">Merancang antarmuka web yang rapi, modern, mudah digunakan, serta responsif di semua layar.</p>
+
+                <ul class="space-y-3">
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-terminal"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Pemrograman Web</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Membangun website dan aplikasi dengan HTML5, Tailwind CSS, dan JavaScript (manipulasi DOM).</p>
+                        </div>
+                    </li>
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Web Design Responsif</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Merancang antarmuka yang rapi, modern, dan nyaman dipakai di semua ukuran layar.</p>
+                        </div>
+                    </li>
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-file-word"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Microsoft Office</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Mengoperasikan Word, Excel, dan PowerPoint untuk dokumen, data, dan presentasi.</p>
+                        </div>
+                    </li>
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Teknologi Cloud & AI</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Memanfaatkan layanan cloud dan tools AI untuk bekerja lebih cepat dan efisien.</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
-            <div class="custom-card tilt p-6 rounded-2xl hover:border-coolHorizon transition-all group reveal" data-tilt="8" style="transition-delay:.1s">
-                <div class="w-12 h-12 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center text-2xl mb-4 group-hover:bg-coolHorizon group-hover:text-nightBordeaux group-hover:rotate-6 transition-all">
-                    <i class="fa-solid fa-code"></i>
+            <!-- Soft Skills -->
+            <div class="custom-card rounded-3xl p-6 sm:p-8 hover:border-coolHorizon transition-all reveal h-full" style="transition-delay:.1s">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-11 h-11 rounded-xl bg-ivoryMist text-nightBordeaux flex items-center justify-center text-xl shadow-lg">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Soft Skills</h3>
+                        <p class="text-[11px] text-coolHorizon font-semibold">Kemampuan interpersonal</p>
+                    </div>
                 </div>
-                <h3 class="font-playful text-lg font-bold text-ivoryMist mb-2">Frontend Fundamentals</h3>
-                <p class="text-ivoryMist/80 text-xs leading-relaxed">Menguasai struktur HTML5, styling Tailwind CSS, serta manipulasi DOM JavaScript.</p>
-            </div>
 
-            <div class="custom-card tilt p-6 rounded-2xl hover:border-coolHorizon transition-all group reveal" data-tilt="8" style="transition-delay:.2s">
-                <div class="w-12 h-12 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center text-2xl mb-4 group-hover:bg-coolHorizon group-hover:text-nightBordeaux group-hover:rotate-6 transition-all">
-                    <i class="fa-solid fa-brain"></i>
-                </div>
-                <h3 class="font-playful text-lg font-bold text-ivoryMist mb-2">Growth Mindset & Adaptive</h3>
-                <p class="text-ivoryMist/80 text-xs leading-relaxed">Siap dipandu dan cepat mempelajari framework atau tools baru sesuai kebutuhan proyek.</p>
+                <ul class="space-y-3">
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Komunikasi yang Baik</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Menyampaikan ide dengan jelas dan mendengarkan agar tidak terjadi salah paham.</p>
+                        </div>
+                    </li>
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Kerja Sama Tim</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Berkolaborasi dan berbagi peran agar target tim tercapai bersama.</p>
+                        </div>
+                    </li>
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-puzzle-piece"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Problem Solving & Adaptif</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Menganalisis masalah dengan tenang dan cepat mempelajari tools baru sesuai kebutuhan proyek.</p>
+                        </div>
+                    </li>
+                    <li class="skill-row group flex items-start gap-4 p-3 rounded-2xl border border-transparent hover:border-coolHorizon/40 hover:bg-coolHorizon/10 transition-all">
+                        <div class="skill-icon w-10 h-10 shrink-0 rounded-xl bg-coolHorizon/20 text-coolHorizon flex items-center justify-center group-hover:bg-coolHorizon group-hover:text-nightBordeaux transition-all">
+                            <i class="fa-solid fa-microphone-lines"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-playful font-semibold text-ivoryMist">Public Speaking</h4>
+                            <p class="text-xs text-ivoryMist/75 leading-relaxed">Percaya diri menyampaikan gagasan dan presentasi di depan banyak orang.</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
@@ -353,90 +491,16 @@
         <div id="techInfo" class="hidden text-center mb-6">
             <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-coolHorizon/20 text-coolHorizon text-xs font-bold border border-coolHorizon/40">
                 Tag aktif: <b id="techInfoName"></b>
-                <button onclick="resetFilter()" class="hover:text-ivoryMist"><i class="fa-solid fa-circle-xmark"></i></button>
+                <button onclick="resetFilter()" class="hover:text-ivoryMist" aria-label="Hapus filter"><i class="fa-solid fa-circle-xmark"></i></button>
             </span>
         </div>
-        <div class="mb-6"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
-
-            <!-- Card 1 -->
-            <div class="project-card tilt custom-card rounded-2xl overflow-hidden hover:border-coolHorizon flex flex-col reveal" data-tilt="6" data-category="web" data-tech="html tailwind js">
-                <div class="h-44 bg-bordeauxDark relative overflow-hidden group border-b border-ivoryMist/10">
-                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=600" alt="Preview Proyek 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100" onerror="this.style.display='none'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-nightBordeaux/80 to-transparent"></div>
-                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-nightBordeaux/90 text-coolHorizon text-[10px] font-bold border border-coolHorizon/40">Web Design</span>
-                </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Interactive Web Portfolio</h3>
-                        <p class="text-ivoryMist/70 text-xs mt-2 leading-relaxed">Portofolio estetik dengan kombinasi Night Bordeaux & Cool Horizon, typing effect, dan pop-up interaktif.</p>
-                    </div>
-                    <div class="space-y-3 pt-2">
-                        <div class="flex flex-wrap gap-1.5">
-                            <span onclick="filterByTech('html')" class="tech-tag">#HTML5</span>
-                            <span onclick="filterByTech('tailwind')" class="tech-tag">#Tailwind</span>
-                            <span onclick="filterByTech('js')" class="tech-tag">#JS</span>
-                        </div>
-                        <button onclick="openProjectModal('portofolio')" class="detail-btn">
-                            <i class="fa-solid fa-circle-info"></i> Quick Detail & Specs
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="project-card tilt custom-card rounded-2xl overflow-hidden hover:border-coolHorizon flex flex-col reveal" data-tilt="6" data-category="app" data-tech="html css js" style="transition-delay:.1s">
-                <div class="h-44 bg-bordeauxDark relative overflow-hidden group border-b border-ivoryMist/10">
-                    <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=600" alt="Preview Proyek 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100" onerror="this.style.display='none'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-nightBordeaux/80 to-transparent"></div>
-                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-nightBordeaux/90 text-coolHorizon text-[10px] font-bold border border-coolHorizon/40">Web App</span>
-                </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Task Coordinator Interface</h3>
-                        <p class="text-ivoryMist/70 text-xs mt-2 leading-relaxed">Aplikasi pengelola tugas dengan filter prioritas dinamis dan antarmuka interaktif yang bersih.</p>
-                    </div>
-                    <div class="space-y-3 pt-2">
-                        <div class="flex flex-wrap gap-1.5">
-                            <span onclick="filterByTech('html')" class="tech-tag">#HTML/CSS</span>
-                            <span onclick="filterByTech('js')" class="tech-tag">#JS DOM</span>
-                        </div>
-                        <button onclick="openProjectModal('taskapp')" class="detail-btn">
-                            <i class="fa-solid fa-circle-info"></i> Quick Detail & Specs
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="project-card tilt custom-card rounded-2xl overflow-hidden hover:border-coolHorizon flex flex-col reveal" data-tilt="6" data-category="web" data-tech="html css" style="transition-delay:.2s">
-                <div class="h-44 bg-bordeauxDark relative overflow-hidden group border-b border-ivoryMist/10">
-                    <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=600" alt="Preview Proyek 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100" onerror="this.style.display='none'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-nightBordeaux/80 to-transparent"></div>
-                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-nightBordeaux/90 text-coolHorizon text-[10px] font-bold border border-coolHorizon/40">Web Design</span>
-                </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                        <h3 class="font-playful text-xl font-bold text-ivoryMist">Edukasi Landing Page</h3>
-                        <p class="text-ivoryMist/70 text-xs mt-2 leading-relaxed">Desain halaman informasi dengan penyusunan konten yang terstruktur, nyaman dibaca, serta responsif.</p>
-                    </div>
-                    <div class="space-y-3 pt-2">
-                        <div class="flex flex-wrap gap-1.5">
-                            <span onclick="filterByTech('css')" class="tech-tag">#Responsive</span>
-                            <span onclick="filterByTech('css')" class="tech-tag">#CSS</span>
-                        </div>
-                        <button onclick="openProjectModal('edumodule')" class="detail-btn">
-                            <i class="fa-solid fa-circle-info"></i> Quick Detail & Specs
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Kartu proyek dibuat otomatis dari projectData (lihat bagian script paling bawah) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" id="projectsGrid"></div>
 
         <!-- Tombol lihat semua karya -->
         <div class="text-center mt-10 reveal">
-            <a href="https://github.com/stephani689?tab=repositories" target="_blank"
+            <a href="https://github.com/stephani689?tab=repositories" target="_blank" rel="noopener noreferrer"
                class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl custom-card hover:border-coolHorizon text-ivoryMist font-bold text-sm transition-all hover:-translate-y-1">
                 <i class="fa-brands fa-github text-coolHorizon text-lg"></i>
                 Lihat Semua Karya di GitHub
@@ -452,16 +516,27 @@
             <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-ivoryMist/10 rounded-full blur-2xl"></div>
             <h2 class="font-playful text-3xl sm:text-4xl font-bold text-ivoryMist relative">Mari Terhubung & Berdiskusi! 💌</h2>
             <p class="text-ivoryMist/80 text-sm max-w-lg mx-auto leading-relaxed relative">
-                Tertarik untuk berkolaborasi atau punya ide proyek web yang ingin diwujudkan bersama? Hubungi aku melalui GitHub atau Email!
+                Tertarik untuk berkolaborasi atau punya ide proyek web yang ingin diwujudkan bersama? Hubungi aku melalui GitHub, LinkedIn, atau Email!
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 relative">
-                <a href="https://github.com/stephani689" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-nightBordeaux text-ivoryMist hover:text-coolHorizon border border-coolHorizon/40 font-bold text-sm transition-all hover:-translate-y-1 flex items-center justify-center gap-2 shadow-lg">
+            <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 pt-4 relative">
+                <a href="https://github.com/stephani689" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-nightBordeaux text-ivoryMist hover:text-coolHorizon border border-coolHorizon/40 font-bold text-sm transition-all hover:-translate-y-1 flex items-center justify-center gap-2 shadow-lg">
                     <i class="fa-brands fa-github text-lg"></i> Kunjungi GitHub
+                </a>
+                <a data-link="linkedin" href="#" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-nightBordeaux text-ivoryMist hover:text-coolHorizon border border-coolHorizon/40 font-bold text-sm transition-all hover:-translate-y-1 flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fa-brands fa-linkedin text-lg"></i> LinkedIn
                 </a>
                 <button onclick="copyEmail(event)" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-coolHorizon text-nightBordeaux font-bold text-sm hover:bg-ivoryMist transition-all hover:-translate-y-1 flex items-center justify-center gap-2 shadow-lg">
                     <i class="fa-solid fa-envelope"></i> <span id="copyBtnText2">Salin Alamat Email</span>
                 </button>
             </div>
+        </div>
+
+        <!-- Tagline penutup -->
+        <div class="text-center mt-12 reveal">
+            <div class="w-12 h-1 bg-coolHorizon mx-auto rounded-full mb-5"></div>
+            <p class="font-playful text-2xl sm:text-3xl font-semibold tracking-wide">
+                <span class="gradient-text">Let’s build something great together.</span> <span>✨</span>
+            </p>
         </div>
     </section>
 
@@ -479,7 +554,7 @@
     <!-- MODAL SERTIFIKAT -->
     <div id="certModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-nightBordeaux/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 p-4">
         <div class="modal-box custom-card p-6 sm:p-8 rounded-3xl max-w-xl w-full relative space-y-5 text-left border-coolHorizon shadow-2xl">
-            <button onclick="closeModal('certModal')" class="absolute top-4 right-4 text-ivoryMist/70 hover:text-coolHorizon text-xl hover:rotate-90 transition-all">
+            <button onclick="closeModal('certModal')" class="absolute top-4 right-4 text-ivoryMist/70 hover:text-coolHorizon text-xl hover:rotate-90 transition-all" aria-label="Tutup">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
@@ -502,7 +577,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-ivoryMist/10">
-                <a href="assets/sertifikat.pdf" target="_blank" class="text-xs text-coolHorizon hover:text-ivoryMist font-bold flex items-center gap-2 transition-colors">
+                <a href="assets/sertifikat.pdf" target="_blank" rel="noopener noreferrer" class="text-xs text-coolHorizon hover:text-ivoryMist font-bold flex items-center gap-2 transition-colors">
                     <i class="fa-solid fa-file-pdf text-base"></i> Buka / Unduh Dokumen PDF Asli <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
                 <button onclick="closeModal('certModal')" class="px-5 py-2 rounded-xl bg-coolHorizon text-nightBordeaux font-bold text-xs shadow-md hover:bg-ivoryMist transition-all w-full sm:w-auto">Tutup</button>
@@ -513,7 +588,7 @@
     <!-- MODAL PROYEK -->
     <div id="projectModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-nightBordeaux/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 p-4">
         <div class="modal-box custom-card p-6 sm:p-8 rounded-3xl max-w-lg w-full relative space-y-4 text-left border-coolHorizon shadow-2xl">
-            <button onclick="closeModal('projectModal')" class="absolute top-4 right-4 text-ivoryMist/70 hover:text-coolHorizon text-xl hover:rotate-90 transition-all">
+            <button onclick="closeModal('projectModal')" class="absolute top-4 right-4 text-ivoryMist/70 hover:text-coolHorizon text-xl hover:rotate-90 transition-all" aria-label="Tutup">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <span id="projModalTag" class="text-xs font-bold px-3 py-1 rounded-full bg-coolHorizon text-nightBordeaux inline-block">Web Design</span>
@@ -525,8 +600,11 @@
                 <ul id="projModalFeatures" class="text-xs text-ivoryMist/80 space-y-1 list-disc list-inside"></ul>
             </div>
 
-            <div class="flex justify-end gap-3 pt-2">
-                <a href="https://github.com/stephani689" target="_blank" class="px-5 py-2 rounded-xl bg-coolHorizon text-nightBordeaux font-bold text-xs flex items-center gap-2 hover:bg-ivoryMist transition-all">
+            <div class="flex flex-wrap justify-end gap-3 pt-2">
+                <a id="projModalDemo" href="#" target="_blank" rel="noopener noreferrer" style="display:none" class="px-5 py-2 rounded-xl custom-card text-ivoryMist font-bold text-xs flex items-center gap-2 hover:border-coolHorizon transition-all">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-coolHorizon"></i> Live Demo
+                </a>
+                <a id="projModalLink" href="https://github.com/stephani689" target="_blank" rel="noopener noreferrer" class="px-5 py-2 rounded-xl bg-coolHorizon text-nightBordeaux font-bold text-xs flex items-center gap-2 hover:bg-ivoryMist transition-all">
                     <i class="fa-brands fa-github"></i> Lihat Code
                 </a>
                 <button onclick="closeModal('projectModal')" class="px-4 py-2 rounded-xl custom-card text-ivoryMist text-xs font-bold hover:border-coolHorizon transition-all">Tutup</button>
@@ -539,11 +617,95 @@
         .tech-tag:hover { background: #80AEE9; color: #5B0015; transform: translateY(-2px); }
         .detail-btn { width: 100%; padding: 10px; border-radius: 12px; background: rgba(128,174,233,.2); color: #80AEE9; font-weight: 700; font-size: 12px; border: 1px solid rgba(128,174,233,.4); display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s; }
         .detail-btn:hover { background: #80AEE9; color: #5B0015; }
+        .skill-row:hover .skill-icon { transform: rotate(-6deg) scale(1.05); }
+        .skill-icon { transition: all .3s; }
     </style>
 
     <script>
+        /* =====================================================
+           PENGATURAN LINK (edit di sini)
+           Kosongkan ("") kalau tidak mau menampilkan tombolnya.
+           ===================================================== */
+        const LINKS = {
+            cv: "assets/CV-Stephani.pdf",   // simpan file CV kamu di folder assets dengan nama ini
+            linkedin: ""                     // contoh: "https://www.linkedin.com/in/username-kamu"
+        };
+        document.querySelectorAll('[data-link]').forEach(el => {
+            const url = LINKS[el.dataset.link];
+            if (url) el.href = url; else el.remove();
+        });
+
+        /* =====================================================
+           DATA PROYEK (edit di sini)
+           - image : path screenshot di folder assets (kalau belum ada, tampil ikon)
+           - tags  : tulis teknologi aslinya, klik tag = filter otomatis
+           - demo  : isi link live demo, kosongkan "" kalau belum ada
+           - category: "web" (Web Design) atau "app" (Web App)
+           ===================================================== */
+        const projectData = {
+            portofolio: {
+                title: "Portofolio Stephani", tag: "Web Design", category: "web", icon: "fa-palette",
+                image: "assets/porto.png",
+                repo: "https://github.com/stephani689/Portofolio-Stephani",
+                demo: "",
+                tags: ["HTML", "Tailwind", "JavaScript"],
+                shortDesc: "Kumpulan karya, pengalaman, dan perjalananku di dunia teknologi dalam satu portofolio interaktif.",
+                desc: "Kumpulan karya, pengalaman, dan perjalananku di dunia teknologi, dikemas dalam website portofolio interaktif dengan nuansa Night Bordeaux dan Cool Horizon.",
+                features: ["Desain Playful & Professional UI/UX", "Efek pengetikan teks otomatis (Typing Effect)", "Filter tag teknologi interaktif & modal sertifikat"]
+            },
+            locapic: {
+                title: "LocaPic App", tag: "Web App", category: "app", icon: "fa-camera",
+                image: "assets/awal.jpeg",
+                repo: "https://github.com/stephani689/LocaPic-APP",
+                demo: "",
+                tags: ["HTML", "CSS", "JavaScript"],   // GANTI sesuai teknologi asli LocaPic
+                shortDesc: "\"One shot, and everything will be alright.\" Aplikasi dengan antarmuka interaktif yang simpel dan mudah digunakan.",
+                desc: "\"One shot, and everything will be alright.\" Aplikasi dengan antarmuka interaktif yang simpel dan mudah digunakan.",
+                features: ["Antarmuka bersih dan mudah digunakan", "Interaktivitas JavaScript", "Tampilan responsif di semua layar"]   // GANTI dengan fitur aslinya
+            },
+            cardiobayes: {
+                title: "Cardio-Bayes", tag: "Web App", category: "app", icon: "fa-heart-pulse",
+                image: "assets/web.png",
+                repo: "https://github.com/stephani689/Cardio-Bayes",
+                demo: "",
+                tags: ["HTML", "CSS", "JavaScript"],   // GANTI, misalnya Python, Flask, Naive Bayes
+                shortDesc: "Web untuk memprediksi penyakit dini serangan jantung berdasarkan data dan kebiasaan (habit).",
+                desc: "Web untuk memprediksi penyakit dini serangan jantung berdasarkan data dan kebiasaan (habit) pengguna.",
+                features: ["Prediksi dini risiko serangan jantung", "Berdasarkan data dan kebiasaan pengguna", "Berbasis web, bisa diakses dari berbagai perangkat"]   // GANTI dengan fitur aslinya
+            }
+        };
+
+        /* ===== Render kartu proyek dari projectData ===== */
+        const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        (function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = Object.entries(projectData).map(([key, p], i) => `
+                <div class="project-card tilt custom-card rounded-2xl overflow-hidden hover:border-coolHorizon flex flex-col reveal" data-tilt="6" data-category="${p.category}" data-tech="${p.tags.map(slug).join(' ')}" style="transition-delay:${i * 0.1}s">
+                    <div class="h-44 relative overflow-hidden group border-b border-ivoryMist/10 bg-gradient-to-br from-bordeauxLight to-bordeauxDark">
+                        <div class="absolute inset-0 flex items-center justify-center"><i class="fa-solid ${p.icon} text-5xl text-coolHorizon/60"></i></div>
+                        <img src="${p.image}" alt="Tampilan ${p.title}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90" onerror="this.remove()">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nightBordeaux/80 to-transparent"></div>
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-nightBordeaux/90 text-coolHorizon text-[10px] font-bold border border-coolHorizon/40">${p.tag}</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="font-playful text-xl font-bold text-ivoryMist">${p.title}</h3>
+                            <p class="text-ivoryMist/70 text-xs mt-2 leading-relaxed">${p.shortDesc}</p>
+                        </div>
+                        <div class="space-y-3 pt-2">
+                            <div class="flex flex-wrap gap-1.5">
+                                ${p.tags.map(t => `<span onclick="filterByTech('${slug(t)}')" class="tech-tag">#${t}</span>`).join('')}
+                            </div>
+                            <button onclick="openProjectModal('${key}')" class="detail-btn">
+                                <i class="fa-solid fa-circle-info"></i> Quick Detail & Specs
+                            </button>
+                        </div>
+                    </div>
+                </div>`).join('');
+        })();
+
         /* ===== Typing Effect ===== */
-        const words = ["Web Designer & Developer", "Certified Web Assistant", "Fast & Eager Learner"];
+        const words = ["Web Design & Development", "Aplikasi Web Interaktif", "Sistem Informasi"];
         let wordIndex = 0, charIndex = 0, isDeleting = false;
         const typingElement = document.getElementById("typingText");
         function typeEffect() {
@@ -690,29 +852,16 @@
         document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); }));
         document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-open').forEach(m => closeModal(m.id)); });
 
-        const projectData = {
-            portofolio: {
-                title: "Interactive Web Portfolio", tag: "Web Design",
-                desc: "Website portofolio estetik dengan nuansa warna Night Bordeaux dan Cool Horizon, dilengkapi dengan animasi Polaroid photo frame, tag filter interaktif, dan pop-up sertifikat.",
-                features: ["Desain Playful & Professional UI/UX", "Efek pengetikan teks otomatis (Typing Effect)", "Filter tag teknologi interaktif & modal sertifikat"]
-            },
-            taskapp: {
-                title: "Task Coordinator Interface", tag: "Web App",
-                desc: "Aplikasi manajemen tugas interaktif dengan filter status dan antarmuka visual yang bersih.",
-                features: ["Interaktivitas DOM JavaScript", "Filter tugas prioritas", "Tampilan responsif di semua layar"]
-            },
-            edumodule: {
-                title: "Edukasi Landing Page", tag: "Web Design",
-                desc: "Desain website sederhana untuk penyampaian informasi dan materi edukasi digital secara terstruktur.",
-                features: ["Struktur layout rapi dan bersih", "Responsif di perangkat HP & Laptop", "Kecepatan muat halaman tinggi"]
-            }
-        };
         function openProjectModal(key) {
             const data = projectData[key];
             if (!data) return;
             document.getElementById('projModalTitle').textContent = data.title;
             document.getElementById('projModalTag').textContent = data.tag;
             document.getElementById('projModalDesc').textContent = data.desc;
+            document.getElementById('projModalLink').href = data.repo;
+            const demo = document.getElementById('projModalDemo');
+            if (data.demo) { demo.href = data.demo; demo.style.display = 'flex'; }
+            else { demo.style.display = 'none'; }
             const list = document.getElementById('projModalFeatures');
             list.innerHTML = '';
             data.features.forEach(f => { const li = document.createElement('li'); li.textContent = f; list.appendChild(li); });
