@@ -33,6 +33,8 @@ Website ini dirancang dengan gaya modern, responsif, dan interaktif menggunakan 
 
 ---
 
+![porto](https://github.com/user-attachments/assets/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+
 ## Cara Menjalankan Secara Lokal (Local Development)
 
 Jika Anda ingin melihat atau mengembangkan ulang kode ini di komputer lokal Anda melalui **VS Code**:
